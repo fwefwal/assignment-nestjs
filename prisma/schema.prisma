@@ -23,8 +23,8 @@ model Article {
   tagList        ArticleTag[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  favorited      Boolean
-  favoritesCount Int
+  favorited      Boolean      @default(false)
+  favoritesCount Int          @default(0)
 }
 
 model ArticleTag {
