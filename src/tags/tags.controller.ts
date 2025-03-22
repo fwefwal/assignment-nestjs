@@ -7,8 +7,10 @@ export class TagsController {
   constructor(private tagsService: TagsService) { }
 
   @Get()
-  getTags() {
-    return this.tagsService.findAll()
+  async getTags() {
+    return {
+      tags: await this.tagsService.findAll()
+    }
   }
 
 }
