@@ -12,11 +12,11 @@ export class ArticlesService {
   }
 
   findAll() {
-    return `This action returns all articles`;
+    return this.prismaService.article.findMany({ include: { tagList: true } })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  findOne(slug: string) {
+    return this.prismaService.article.findFirst({ where: { slug } })
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {

@@ -13,13 +13,17 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  async findAll() {
+    const articles = await this.articlesService.findAll()
+    return {
+      articles,
+      articlesCount: articles.length
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.articlesService.findOne(+id);
+  @Get(':slug')
+  findOne(@Param('slug') slug: string) {
+    return this.articlesService.findOne(slug);
   }
 
   @Patch(':id')
