@@ -279,7 +279,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -347,7 +347,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -421,7 +421,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -495,7 +495,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -638,7 +638,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -710,7 +710,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -782,7 +782,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -854,7 +854,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -932,7 +932,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1071,7 +1071,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1271,7 +1271,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1342,7 +1342,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1532,7 +1532,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200",
+                  "var is200Response = pm.response.code === 200",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1594,7 +1594,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200",
+                  "var is200Response = pm.response.code === 200",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1786,7 +1786,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "if (!(environment.isIntegrationTest)) {",
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1845,7 +1845,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "if (!(environment.isIntegrationTest)) {",
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1905,7 +1905,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "if (!(environment.isIntegrationTest)) {",
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
@@ -1969,7 +1969,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "var is200Response = responseCode.code === 200;",
+                  "var is200Response = pm.response.code === 200;",
                   "",
                   "tests['Response code is 200 OK'] = is200Response;",
                   "",
