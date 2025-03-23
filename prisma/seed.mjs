@@ -34,24 +34,6 @@ async function seedArticles() {
   })
 }
 
-async function seedArticleTag() {
-  await prismaClient.articleTag.createMany({
-    data: [
-      {
-        articleId: 1,
-        tagId: 1
-      },
-      {
-        articleId: 2,
-        tagId: 1
-      },
-      {
-        articleId: 2,
-        tagId: 2
-      }
-    ]
-  })
-}
 
 async function main() {
   try {
@@ -62,12 +44,6 @@ async function main() {
 
   try {
     await seedArticles()
-  } catch (error) {
-    console.error(error)
-  }
-
-  try {
-    await seedArticleTag()
   } catch (error) {
     console.error(error)
   }

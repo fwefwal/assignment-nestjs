@@ -1,11 +1,18 @@
-import { NestFactory } from '@nestjs/core'
+import { NestFactory, Reflector, HttpAdapterHost } from '@nestjs/core'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { PrismaExceptionFilter } from './prisma/exception-filter.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.setGlobalPrefix('/api')
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new PrismaExceptionFilter(httpAdapter))
 
   const config = new DocumentBuilder()
     .setTitle('RealWorld API')

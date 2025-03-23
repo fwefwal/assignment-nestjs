@@ -1,29 +1,93 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { LibService } from 'src/lib/lib.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Injectable()
 export class ArticlesService {
-  constructor(private prismaService: PrismaService) { }
+  constructor(private prismaService: PrismaService, private libService: LibService) { }
 
   create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+    const { article } = createArticleDto
+
+    return this.prismaService.article.create({
+      data: {
+        ...article,
+        slug: this.libService.generateSlug(article.title),
+        tagList: {
+          connectOrCreate: article.tagList?.map(tagName => ({
+            where: {
+              title: tagName
+            },
+            create: {
+              title: tagName
+            }
+          }))
+        },
+      },
+      include: {
+        tagList: {
+          select: {
+            title: true
+          }
+        }
+      }
+    })
   }
 
-  findAll() {
-    return this.prismaService.article.findMany({ include: { tagList: true } })
+  findAll({ tag, author, favoritedBy, limit, offset }) {
+    const filterParams = {}
+
+    if (tag) {
+      filterParams["tagList"] = {
+        some: {
+          title: tag,
+        }
+      }
+    }
+
+    const paginationParams = {
+      skip: offset,
+      take: limit
+    }
+
+    return this.prismaService.article.findMany({
+      where: filterParams,
+      include: {
+        tagList: {
+          select: { 'title': true },
+        }
+      },
+      ...paginationParams
+    })
   }
 
   findOne(slug: string) {
-    return this.prismaService.article.findFirst({ where: { slug } })
+    return this.prismaService.article.findFirst({ where: { slug }, include: { tagList: true } })
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  update(slug: string, updateArticleDto: UpdateArticleDto) {
+    const { article } = updateArticleDto
+
+    if (article.title) {
+      article["slug"] = this.libService.generateSlug(article.title)
+    }
+
+    return this.prismaService.article.update({
+      where: { slug },
+      data: article,
+      include: {
+        tagList: true
+      }
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  remove(slug: string) {
+    this.prismaService.article.delete({
+      where: {
+        slug
+      }
+    })
   }
 }
