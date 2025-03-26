@@ -41,13 +41,15 @@ export class ArticlesController {
     if (!article) {
       throw new NotFoundException(`Article "${slug}" does not exist `)
     }
-    return new ArticleEntity(article);
+    return {
+      article: new ArticleEntity(article)
+    }
   }
 
   @Put(':slug')
   @ApiOkResponse({ type: ArticleEntity })
   async update(@Param('slug') slug: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return new ArticleEntity(await this.articlesService.update(slug, updateArticleDto));
+    return { article: new ArticleEntity(await this.articlesService.update(slug, updateArticleDto)) }
   }
 
   @Delete(':slug')

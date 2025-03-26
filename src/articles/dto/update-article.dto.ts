@@ -1,13 +1,16 @@
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from 'class-validator';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
 
 class NestedArticleDto {
   @IsOptional()
+  @IsString()
   title: string;
 
+  @IsString()
   @IsOptional()
   description: string;
 
+  @IsString()
   @IsOptional()
   body: string;
 }
