@@ -1,45 +1,82 @@
-import { Article, Prisma } from "@prisma/client";
-import { ApiProperty } from "@nestjs/swagger";
-import { Exclude } from "class-transformer";
+import { Article, Prisma } from '@prisma/client'
+import { ApiProperty } from '@nestjs/swagger'
+import { Exclude, Transform, Type } from 'class-transformer'
 
-type ArticleTagList = Prisma.ArticleGetPayload<{ include: { tagList: { select: { title: true } } }, }>
-type ArrayElement<A> = A extends readonly (infer T)[] ? T : never
+type ArticleAuthorTagList = Prisma.ArticleGetPayload<{
+  include: {
+    tagList: {
+      select: {
+        title: true
+      }
+    }
+    author: {
+      select: {
+        username: true
+        bio: true
+        image: true
+      }
+    }
+  }
+}>
 
-type ArticleWithTagsWithoutId = Omit<Article, "id"> & { tagList: ArrayElement<ArticleTagList["tagList"]>["title"][] | undefined }
+class TagList {
+  title: string
+}
 
-export class ArticleEntity implements ArticleWithTagsWithoutId {
+class Author {
+  username: string
+  bio: string
+  image: string | null
+}
+
+type ArticleEntityType = Omit<
+  ArticleAuthorTagList,
+  'authorId' | 'id' | 'tagList' | 'author'
+> & {
+  author: Author
+} & {
+  tagList: TagList[]
+}
+
+export class ArticleEntity implements ArticleEntityType {
   @ApiProperty()
-  slug: string;
+  slug: string
 
   @ApiProperty()
-  title: string;
+  title: string
 
   @ApiProperty()
-  description: string;
+  description: string
 
   @ApiProperty()
-  body: string;
+  body: string
+
+  @ApiProperty({ isArray: true })
+  @Type(() => TagList)
+  @Transform(({ value }) => (value || []).map(({ title }) => title))
+  tagList: TagList[]
 
   @ApiProperty()
-  tagList: string[] = [];
+  createdAt: Date
 
   @ApiProperty()
-  createdAt: Date;
+  updatedAt: Date
 
   @ApiProperty()
-  updatedAt: Date;
+  favorited: boolean
 
   @ApiProperty()
-  favorited: boolean;
+  favoritesCount: number
 
   @ApiProperty()
-  favoritesCount: number;
+  @Type(() => Author)
+  @Transform(({ value }) => value.user)
+  author: Author
 
   @Exclude()
-  id: number;
+  id: number
 
-  constructor(data: ArticleTagList) {
+  constructor(data: ArticleAuthorTagList) {
     Object.assign(this, data)
-    this.tagList = data.tagList?.map(({ title }) => title) ?? []
   }
 }

@@ -2,6 +2,17 @@ import { PrismaClient } from "@prisma/client";
 
 const prismaClient = new PrismaClient()
 
+async function seedUsers() {
+  await prismaClient.user.create({
+    data: {
+      email: "user1@example.com",
+      password: "user1password",
+      username: "user1",
+    }
+  })
+}
+
+
 async function seedTags() {
   await prismaClient.tag.createMany({
     data: [
@@ -16,26 +27,28 @@ async function seedTags() {
 }
 
 async function seedArticles() {
-  await prismaClient.article.createMany({
-    data: [
-      {
-        slug: 'test-article',
-        title: 'Test Article',
-        description: 'Test Article Description',
-        body: 'Test Article Body',
-      },
-      {
-        slug: 'test-article-2',
-        title: 'Test Article 2',
-        description: 'Test Article 2 Description',
-        body: 'Test Article 2 Body',
-      },
-    ]
+  await prismaClient.article.create({
+    data: {
+      slug: 'test-article',
+      title: 'Test Article',
+      description: 'Test Article Description',
+      body: 'Test Article Body',
+      authorId: 1
+    },
+    include: {
+      author: true
+    }
   })
 }
 
 
 async function main() {
+  try {
+    await seedUsers()
+  } catch (error) {
+    console.error(error)
+  }
+
   try {
     await seedTags()
   } catch (error) {

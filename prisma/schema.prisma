@@ -20,9 +20,22 @@ model Article {
   title          String   @unique
   description    String
   body           String
+  author         User?    @relation(fields: [authorId], references: [id])
+  authorId       Int      @unique
   tagList        Tag[]
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   favorited      Boolean  @default(false)
   favoritesCount Int      @default(0)
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  token    String?
+  username String    @unique
+  bio      String    @default("")
+  image    String?
+  articles Article[]
 }
