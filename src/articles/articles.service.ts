@@ -84,7 +84,7 @@ export class ArticlesService {
     return this.prismaService.article.findFirst({
       where: { slug },
       include: {
-        tagList: true,
+        tagList: { select: { title: true } },
         author: {
           select: { username: true, bio: true, image: true },
         },
@@ -103,7 +103,7 @@ export class ArticlesService {
       where: { slug },
       data: article,
       include: {
-        tagList: true,
+        tagList: { select: { title: true } },
         author: {
           select: {
             username: true,
