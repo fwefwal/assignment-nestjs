@@ -9,7 +9,7 @@ import {
   Query,
   NotFoundException,
 } from '@nestjs/common'
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger'
+import { ApiCreatedResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger'
 import { ArticlesService } from './articles.service'
 import { CreateArticleDto } from './dto/create-article.dto'
 import { UpdateArticleDto } from './dto/update-article.dto'
@@ -32,8 +32,13 @@ export class ArticlesController {
 
   @Get()
   @ApiOkResponse({ type: [ArticleEntity] })
+  @ApiQuery({ name: 'tag', required: false })
+  @ApiQuery({ name: 'author', required: false })
+  @ApiQuery({ name: 'favorited', required: false })
+  @ApiQuery({ name: 'limit', required: false, default: 20 })
+  @ApiQuery({ name: 'offset', required: false, default: 0 })
   async findAll(
-    @Query('tag') tag: Tag['title'],
+    @Query('tag') tag: string,
     @Query('author') author: string,
     @Query('favorited') favoritedBy: string,
     @Query('limit') limit: number = 20,

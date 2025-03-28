@@ -1,16 +1,24 @@
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { ApiProperty } from '@nestjs/swagger'
+import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
 
 class ArticleDto {
+  @ApiProperty()
   @IsNotEmpty()
-  title: string;
+  @IsString()
+  title: string
 
+  @ApiProperty()
   @IsNotEmpty()
-  description: string;
+  @IsString()
+  description: string
 
+  @ApiProperty()
   @IsNotEmpty()
-  body: string;
+  @IsString()
+  body: string
 
+  @ApiProperty()
   @IsArray()
   tagList: string[] = []
 }
