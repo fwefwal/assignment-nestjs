@@ -8,7 +8,7 @@ import {
   ValidateNested,
 } from 'class-validator'
 
-class InnerCreateUserDto {
+export class InnerCreateUserDto {
   @ApiProperty({ minLength: 4 })
   @IsNotEmpty()
   @IsString()
