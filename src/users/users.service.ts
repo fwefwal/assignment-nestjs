@@ -14,12 +14,15 @@ export class UsersService {
     })
   }
 
-  findAll() {
-    return `This action returns all users`
+  findUser(id: number) {
+    return `This action returns a #${id} user`
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  findProfile(username: string) {
+    return this.prismaService.user.findFirst({
+      where: { username },
+      select: { username: true, bio: true, image: true },
+    })
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

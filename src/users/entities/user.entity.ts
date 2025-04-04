@@ -30,3 +30,7 @@ export class UserEntity {
     Object.assign(this, userData)
   }
 }
+
+export class UserEntityResponse {
+  user: UserEntity
+}
