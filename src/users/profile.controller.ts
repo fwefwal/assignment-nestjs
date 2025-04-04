@@ -11,7 +11,10 @@ export class ProfileController {
   @Get(':username')
   async findOne(@Param('username') username: string) {
     return {
-      profile: await this.usersService.findProfile(username),
+      profile: {
+        ...(await this.usersService.findProfile(username)),
+        following: false,
+      },
     }
   }
 }
