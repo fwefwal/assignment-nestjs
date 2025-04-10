@@ -9,15 +9,14 @@ export class ArticlesService {
   constructor(
     private prismaService: PrismaService,
     private libService: LibService,
-  ) {}
+  ) { }
 
-  create(createArticleDto: CreateArticleDto) {
-    const { article } = createArticleDto
-
+  create(article: CreateArticleDto) {
     return this.prismaService.article.create({
       data: {
         ...article,
         slug: this.libService.generateSlug(article.title),
+        authorId: 1,
         tagList: {
           connectOrCreate: article.tagList?.map((tagName) => ({
             where: {
@@ -93,15 +92,13 @@ export class ArticlesService {
   }
 
   update(slug: string, updateArticleDto: UpdateArticleDto) {
-    const { article } = updateArticleDto
-
-    if (article.title) {
-      article['slug'] = this.libService.generateSlug(article.title)
+    if (updateArticleDto.title) {
+      updateArticleDto['slug'] = this.libService.generateSlug(updateArticleDto.title)
     }
 
     return this.prismaService.article.update({
       where: { slug },
-      data: article,
+      data: updateArticleDto,
       include: {
         tagList: { select: { title: true } },
         author: {

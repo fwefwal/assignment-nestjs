@@ -1,22 +1,4 @@
-import { Type } from "class-transformer";
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { OmitType, PartialType } from "@nestjs/swagger";
+import { CreateArticleDto } from "./create-article.dto";
 
-class NestedArticleDto {
-  @IsOptional()
-  @IsString()
-  title: string;
-
-  @IsString()
-  @IsOptional()
-  description: string;
-
-  @IsString()
-  @IsOptional()
-  body: string;
-}
-
-export class UpdateArticleDto {
-  @ValidateNested({ each: true })
-  @Type(() => NestedArticleDto)
-  article: NestedArticleDto
-}
+export class UpdateArticleDto extends PartialType(OmitType(CreateArticleDto, ['tagList'] as const)) { }

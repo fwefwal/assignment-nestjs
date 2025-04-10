@@ -16,7 +16,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/jest/bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:postman": "newman run ./test/postman/collection.json --delay-request 500 --global-var APIURL=http://localhost:3000/api USERNAME=test PASSWORD=test EMAIL=test@example.com"
+    "test:postman": "newman run ./test/postman/collection.json --delay-request 500 --global-var APIURL=http://localhost:3000/api USERNAME=test PASSWORD=testpassword EMAIL=test@example.com"
   },
   "engines": {
     "npm": ">=10.0.0",

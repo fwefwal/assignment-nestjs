@@ -8,29 +8,33 @@ import {
   Put,
   Query,
   NotFoundException,
+  UseInterceptors,
+  SetMetadata,
 } from '@nestjs/common'
 import { ApiCreatedResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger'
 import { ArticlesService } from './articles.service'
 import { CreateArticleDto } from './dto/create-article.dto'
 import { UpdateArticleDto } from './dto/update-article.dto'
 import { ArticleEntity } from './entities/article.entity'
-import { Tag } from '@prisma/client'
+import { Key } from 'src/common/decorators/key.decorator'
+import { RequestResponseInterceptor } from 'src/common/interceptors/request-response.interceptor'
 
 @Controller('articles')
+@UseInterceptors(RequestResponseInterceptor)
 export class ArticlesController {
-  constructor(private readonly articlesService: ArticlesService) {}
+  constructor(private readonly articlesService: ArticlesService) { }
 
   @Post()
+  @Key('article')
   @ApiCreatedResponse({ type: ArticleEntity })
   async create(@Body() createArticleDto: CreateArticleDto) {
-    return {
-      article: new ArticleEntity(
-        await this.articlesService.create(createArticleDto),
-      ),
-    }
+    return new ArticleEntity(
+      await this.articlesService.create(createArticleDto))
   }
 
   @Get()
+  @Key('articles')
+  @SetMetadata('meta', ['count', 'articlesCount'])
   @ApiOkResponse({ type: [ArticleEntity] })
   @ApiQuery({ name: 'tag', required: false })
   @ApiQuery({ name: 'author', required: false })
@@ -51,35 +55,30 @@ export class ArticlesController {
       limit,
       offset,
     })
-    return {
-      articles: articles.map((article) => new ArticleEntity(article)),
-      articlesCount: articles.length,
-    }
+    return articles.map((article) => new ArticleEntity(article))
   }
 
   @Get(':slug')
+  @Key('article')
   @ApiOkResponse({ type: ArticleEntity })
   async findOne(@Param('slug') slug: string) {
     const article = await this.articlesService.findOne(slug)
     if (!article) {
       throw new NotFoundException(`Article "${slug}" does not exist `)
     }
-    return {
-      article: new ArticleEntity(article),
-    }
+    return new ArticleEntity(article)
   }
 
   @Put(':slug')
+  @Key('article')
   @ApiOkResponse({ type: ArticleEntity })
   async update(
     @Param('slug') slug: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    return {
-      article: new ArticleEntity(
-        await this.articlesService.update(slug, updateArticleDto),
-      ),
-    }
+    return new ArticleEntity(
+      await this.articlesService.update(slug, updateArticleDto),
+    )
   }
 
   @Delete(':slug')

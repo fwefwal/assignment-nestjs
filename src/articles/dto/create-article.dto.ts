@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsArray, IsNotEmpty, IsString, ValidateNested } from 'class-validator'
-import { Type } from 'class-transformer'
+import { IsArray, IsNotEmpty, IsString } from 'class-validator'
 
-class ArticleDto {
+export class CreateArticleDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -21,10 +20,4 @@ class ArticleDto {
   @ApiProperty()
   @IsArray()
   tagList: string[] = []
-}
-
-export class CreateArticleDto {
-  @ValidateNested({ each: true })
-  @Type(() => ArticleDto)
-  article: ArticleDto
 }

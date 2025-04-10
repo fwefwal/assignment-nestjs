@@ -70,8 +70,10 @@ export class ArticleEntity implements ArticleEntityType {
 
   @ApiProperty()
   @Type(() => Author)
-  @Transform(({ value }) => value.user)
   author: Author
+
+  @Exclude()
+  authorId: number
 
   @Exclude()
   id: number
