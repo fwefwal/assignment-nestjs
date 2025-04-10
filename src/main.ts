@@ -2,37 +2,16 @@ import { NestFactory, Reflector, HttpAdapterHost } from '@nestjs/core'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import {
   ClassSerializerInterceptor,
-  HttpStatus,
-  UnprocessableEntityException,
-  ValidationPipe,
 } from '@nestjs/common'
 import { AppModule } from './app.module'
+import { AppValidationPipe } from './app.validation.pipe'
 import { PrismaExceptionFilter } from './prisma/exception-filter.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.setGlobalPrefix('/api')
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      exceptionFactory: (errors) => {
-        return new UnprocessableEntityException({
-          statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-          message: {
-            errors: errors?.at(0)?.children?.reduce((acc, errorChild) => {
-              return {
-                ...acc,
-                [errorChild.property]: Object.values(errorChild.constraints!),
-              }
-            }, {}),
-          },
-        })
-      },
-    }),
-  )
-
+  app.useGlobalPipes(new AppValidationPipe())
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   const { httpAdapter } = app.get(HttpAdapterHost)
