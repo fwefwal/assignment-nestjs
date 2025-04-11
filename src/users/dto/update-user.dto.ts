@@ -1,10 +1,8 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger'
-import { InnerCreateUserDto } from './create-user.dto'
+import { IsString, IsUrl } from 'class-validator'
+import { CreateUserDto } from './create-user.dto'
 
-import { Type } from 'class-transformer'
-import { IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator'
-
-export class InnerUpdateUserDto extends PartialType(InnerCreateUserDto) {
+export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiProperty()
   @IsUrl()
   image?: string
@@ -12,10 +10,4 @@ export class InnerUpdateUserDto extends PartialType(InnerCreateUserDto) {
   @ApiProperty()
   @IsString()
   bio?: string
-}
-
-export class UpdateUserDto {
-  @Type(() => InnerUpdateUserDto)
-  @ValidateNested({ each: true })
-  user: InnerUpdateUserDto
 }

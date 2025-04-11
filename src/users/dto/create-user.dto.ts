@@ -5,10 +5,9 @@ import {
   IsNotEmpty,
   IsString,
   MinLength,
-  ValidateNested,
 } from 'class-validator'
 
-export class InnerCreateUserDto {
+export class CreateUserDto {
   @ApiProperty({ minLength: 4 })
   @IsNotEmpty()
   @IsString()
@@ -25,10 +24,4 @@ export class InnerCreateUserDto {
   @IsString()
   @MinLength(6)
   password: string
-}
-
-export class CreateUserDto {
-  @Type(() => InnerCreateUserDto)
-  @ValidateNested({ each: true })
-  user: InnerCreateUserDto
 }

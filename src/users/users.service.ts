@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
 
   create(createUserDto: CreateUserDto) {
     const { user } = createUserDto
@@ -14,8 +14,10 @@ export class UsersService {
     })
   }
 
-  findUser(id: number) {
-    return `This action returns a #${id} user`
+  findUser(email: string) {
+    return this.prismaService.user.findUnique({
+      where: { email },
+    })
   }
 
   findProfile(username: string) {

@@ -19,6 +19,7 @@ export class PrismaExceptionFilter extends BaseExceptionFilter {
         });
         break;
       }
+      // TODO: process other frequent prisma errors
       default:
         // default 500 error code
         super.catch(exception, host);
