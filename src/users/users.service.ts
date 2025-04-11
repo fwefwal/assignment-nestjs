@@ -8,9 +8,8 @@ export class UsersService {
   constructor(private prismaService: PrismaService) { }
 
   create(createUserDto: CreateUserDto) {
-    const { user } = createUserDto
     return this.prismaService.user.create({
-      data: user,
+      data: createUserDto,
     })
   }
 
@@ -27,11 +26,7 @@ export class UsersService {
     })
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`
-  }
+  // async update(id: number, updateUserDto: UpdateUserDto) {
+  //   return await `This action updates a #${id} user`
+  // }
 }

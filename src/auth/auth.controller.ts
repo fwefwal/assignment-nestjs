@@ -14,7 +14,7 @@ export class AuthController {
   @Post('users/login')
   @ApiCreatedResponse({ type: UserEntity })
   @Key('user')
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto)
+  async signIn(@Body() signInDto: SignInDto) {
+    return new UserEntity(await this.authService.signIn(signInDto))
   }
 }
