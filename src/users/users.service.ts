@@ -25,8 +25,4 @@ export class UsersService {
       select: { username: true, bio: true, image: true },
     })
   }
-
-  // async update(id: number, updateUserDto: UpdateUserDto) {
-  //   return await `This action updates a #${id} user`
-  // }
 }

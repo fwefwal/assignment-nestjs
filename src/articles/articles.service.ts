@@ -114,9 +114,7 @@ export class ArticlesService {
 
   remove(slug: string) {
     this.prismaService.article.delete({
-      where: {
-        slug,
-      },
+      where: { slug },
     })
   }
 }
