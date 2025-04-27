@@ -1,23 +1,52 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { IsArray, IsNotEmpty, IsString } from 'class-validator'
+// import { ApiProperty } from '@nestjs/swagger'
+// import { IsArray, IsNotEmpty, IsString } from 'class-validator'
+
+// export class CreateArticleDto {
+//   @ApiProperty()
+//   @IsNotEmpty()
+//   @IsString()
+//   title: string
+
+//   @ApiProperty()
+//   @IsNotEmpty()
+//   @IsString()
+//   description: string
+
+//   @ApiProperty()
+//   @IsNotEmpty()
+//   @IsString()
+//   body: string
+
+//   @ApiProperty()
+//   @IsArray()
+//   tagList: string[] = []
+// }
+import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class CreateArticleDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'How to train your dragon' })
   @IsNotEmpty()
   @IsString()
-  title: string
+  title: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Ever wonder how?' })
   @IsNotEmpty()
   @IsString()
-  description: string
+  description: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'It takes a Jacobian' })
   @IsNotEmpty()
   @IsString()
-  body: string
+  body: string;
 
-  @ApiProperty()
+  @ApiProperty({ 
+    example: ['dragons', 'training'], 
+    required: false,
+    type: [String] 
+  })
   @IsArray()
-  tagList: string[] = []
+  @IsString({ each: true })
+  @IsOptional()
+  tagList: string[] = [];
 }

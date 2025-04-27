@@ -11,12 +11,25 @@ export class AuthService {
   ) { }
 
   async signIn({ email, password }: SignInDto) {
-    const user = await this.usersService.findUser(email)
+    const user = await this.usersService.findUser(email);
     if (user?.password !== password) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException();
     }
     return {
-      token: await this.jwtService.signAsync({ userId: user.id })
+      token: await this.jwtService.signAsync({ userId: user.id, email: user.email })
+    };
+  }
+
+  async getUserProfile(email: string) {
+    const user = await this.usersService.findUser(email);
+    if (!user) {
+      throw new UnauthorizedException();
     }
+    return {
+      email: user.email,
+      username: user.username,
+      bio: user.bio || 'I work at statefarm',
+      image: user.image || null
+    };
   }
 }
